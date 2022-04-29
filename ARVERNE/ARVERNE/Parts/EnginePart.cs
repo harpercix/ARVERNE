@@ -6,15 +6,15 @@ namespace ARVERNE.Parts
     {
         private int thrust;
         private int isp;
-        private float fuelConsumption;
+        private double fuelConsumption;
         private int diameter;
         
-        public EnginePart(int mass, string name, bool radialJoint, InlineJoint[] inlineJoints, float fuelConsumption,
-            int diameter) : 
-            base(mass, name, radialJoint, inlineJoints)
+        public EnginePart(int mass, string name, bool radialJoint, InlineJoint[] inlineJoints, int thrust, int isp,
+            double fuelConsumption) : base(mass, name, radialJoint, inlineJoints)
         {
             this.fuelConsumption = fuelConsumption;
-            this.diameter = diameter;
+            this.thrust = thrust;
+            this.isp = isp;
         }
     }
 }
