@@ -8,6 +8,7 @@
         public Craft(Stage[] stages)
         {
             this.stages = stages;
+            CalculTotalDV();
         }
 
         private void CalculTotalDV()
