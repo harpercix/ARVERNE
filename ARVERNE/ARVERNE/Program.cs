@@ -29,11 +29,19 @@ namespace ARVERNE
                     new InlineJoint[]
                     {
                         new InlineJoint(1250, new Vector3(0, 7215, 0), new Quaternion(0, 0, 0, 0)),
-                        new InlineJoint(1250, new Vector3(0, 7215, 0), new Quaternion(0, 0, 180, 0))
+                        new InlineJoint(1250, new Vector3(0, -7215, 0), new Quaternion(0, 0, 180, 0))
                     },
                     205160,
                     265,
-                    15.79)
+                    15.79),
+                new InlineDecouplerPart(40,
+                    "TD-12 Decoupler",
+                    false,
+                    new InlineJoint[]
+                    {
+                        new InlineJoint(1250, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0)),
+                        new InlineJoint(1250, new Vector3(0, 0, 0), new Quaternion(0, 180, 0, 0))
+                    })
             };
 
         Console.WriteLine("Hello World!");

@@ -8,6 +8,7 @@ namespace ARVERNE.Parts
         private string name;
         private bool radialJoint;
         private InlineJoint[] inlineJoints;
+        public int Mass => mass;
 
         public Part(int mass, string name, bool radialJoint, InlineJoint[] inlineJoints)
         {

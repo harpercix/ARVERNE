@@ -8,7 +8,8 @@ namespace ARVERNE.Parts
         private int isp;
         private double fuelConsumption;
         private int diameter;
-        
+        public int Isp => isp;
+
         public EnginePart(int mass, string name, bool radialJoint, InlineJoint[] inlineJoints, int thrust, int isp,
             double fuelConsumption) : base(mass, name, radialJoint, inlineJoints)
         {
