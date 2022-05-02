@@ -8,5 +8,10 @@ namespace ARVERNE.Parts
             base(mass, name, radialJoint, inlineJoints)
         {
         }
+
+        public override Part Clone()
+        {
+            return new InlineDecouplerPart(Mass, Name, RadialJoint, CopyInlineJoints());
+        }
     }
 }

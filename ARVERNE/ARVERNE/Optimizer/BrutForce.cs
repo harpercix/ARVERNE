@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ARVERNE.Parts;
 using ARVERNE.Stages;
 
@@ -19,11 +20,12 @@ namespace ARVERNE.Optimizer
             {
                 Craft newCraft = craft.Clone();
                 newCraft.Stages[i].Tanks.Add((OxFuelPart) parts["OxFuel"][0]);
+                newCraft.CalculTotalDV();
                 CreatCrafts(NbStage, DVNeeded, crafts, parts, newCraft);
             }
         }
 
-        public static List<Craft> BrutForcer(int DVNeeded, Dictionary<string, Part[]> parts, int NbStageMax, 
+        private static List<Craft> BrutForcer(int DVNeeded, Dictionary<string, Part[]> parts, int NbStageMax, 
             int payloadMass)
         {
             List<Craft> crafts = new List<Craft>();
@@ -38,6 +40,27 @@ namespace ARVERNE.Optimizer
 
                 CreatCrafts(i, DVNeeded, crafts, parts, craft);
             }
+
+            return crafts;
+        }
+
+        public static Craft BrutForcerMain(int DVNeeded, Dictionary<string, Part[]> parts, int NbStageMax,
+            int payloadMass)
+        {
+            List<Craft> crafts = BrutForcer(DVNeeded, parts, NbStageMax, payloadMass);
+            Craft bestCraft = crafts[0];
+            int mass = bestCraft.CalculMass();
+            for (int i = 1; i < crafts.Count; i++)
+            {
+                Console.WriteLine(crafts[i].Print());
+                if (crafts[i].CalculMass() < mass)
+                {
+                    bestCraft = crafts[i];
+                    mass = bestCraft.TotalMass;
+                }
+            }
+
+            return bestCraft;
         }
     }
 }

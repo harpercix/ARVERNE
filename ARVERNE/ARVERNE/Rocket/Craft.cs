@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ARVERNE.Stages
 {
@@ -7,8 +8,10 @@ namespace ARVERNE.Stages
         private List<Stage> stages;
         private double totalDV;
         private int payloadMass;
+        private int totalMass;
 
         public List<Stage> Stages => stages;
+        public int TotalMass => totalMass;
 
         public Craft(List<Stage> stages, int payloadMass)
         {
@@ -29,14 +32,26 @@ namespace ARVERNE.Stages
             return totalDV;
         }
 
-        private void CalculMass()
+        public int CalculMass()
         {
-            Stages[stages.Count - 1].CalculMass();
-            Stages[stages.Count - 1].PayloadMass = payloadMass;
-            for (int i = stages.Count - 2; i >= 0; i++)
+            if (stages.Count > 0)
             {
-                stages[i].PayloadMass = stages[i + 1].WetMass + stages[i + 1].PayloadMass;
+                stages[^1].CalculMass();
+                stages[^1].PayloadMass = payloadMass;
+                for (int i = stages.Count - 2; i >= 0; i--)
+                {
+                    stages[i].PayloadMass = stages[i + 1].WetMass + stages[i + 1].PayloadMass;
+                }
+
+                foreach (Stage stage in stages)
+                {
+                    stage.CalculMass();
+                    totalMass += stage.WetMass;
+                }
+
+                totalMass += payloadMass;
             }
+            return totalMass;
         }
 
         public Craft Clone()
@@ -47,6 +62,21 @@ namespace ARVERNE.Stages
                 newStages.Add(stage.Clone());
             }
             return new Craft(newStages, payloadMass);
+        }
+
+        public string Print()
+        {
+            string v = "";
+            v += "TotalDV = " + totalDV.ToString() + "\n";
+            v += "TotalMass = " + totalMass.ToString() + "\n";
+            v += "PayloadMass = " + payloadMass.ToString() + "\n";
+            v += stages.Count + ":\n";
+            foreach (Stage stage in stages)
+            {
+                v += stage.Print(2);
+            }
+
+            return v;
         }
     }
 }

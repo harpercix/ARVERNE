@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using ARVERNE.Parts;
 using ARVERNE.Parts.PartsProperties;
 
@@ -20,7 +21,7 @@ namespace ARVERNE.Stages
 
         public double DV => dV;
         public int WetMass => wetMass;
-        public List<OxFuelPart> Tanks => Tanks;
+        public List<OxFuelPart> Tanks => tanks;
 
         public int PayloadMass
         {
@@ -66,6 +67,18 @@ namespace ARVERNE.Stages
                 newtanks.Add((OxFuelPart) tank.Clone());
             }
             return new Stage(newtanks, (EnginePart) engine.Clone(), (InlineDecouplerPart) decoupler.Clone(), payloadMass);
+        }
+
+        public string Print(int spacing)
+        {
+            string s = "", v = "";
+            for (int i = 0; i < spacing; i++)
+            {
+                s += " ";
+            }
+
+            v += s + dV + "m/s, (" + wetMass + "-" + dryMass + ")\n";
+            return v;
         }
     }
 }

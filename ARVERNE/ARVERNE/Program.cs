@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using ARVERNE.Optimizer;
 using ARVERNE.Parts;
 using ARVERNE.Parts.PartsProperties;
+using ARVERNE.Stages;
 
 namespace ARVERNE
 {
@@ -47,8 +49,8 @@ namespace ARVERNE
                         new InlineJoint(1250, new Vector3(0, 0, 0), new Quaternion(0, 180, 0, 0))
                     })}}
             };
-
-        Console.WriteLine("Hello World!");
+            Craft bestCraft = BrutForce.BrutForcerMain(1000, parts, 3, 0);
+            Console.WriteLine(bestCraft.Print());
         }
     }
 }

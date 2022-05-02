@@ -15,7 +15,6 @@ namespace ARVERNE.Parts
         public int DryMass => dryMass;
         public int Oxidizer => oxidizer;
         public int Fuel => fuel;
-        public
 
         public OxFuelPart(int mass, string name, bool radialJoint, InlineJoint[] inlineJoints, int oxidizer, int fuel, 
             int dryMass) : base(mass, name, radialJoint, inlineJoints)
