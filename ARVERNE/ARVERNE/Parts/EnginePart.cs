@@ -17,5 +17,10 @@ namespace ARVERNE.Parts
             this.thrust = thrust;
             this.isp = isp;
         }
+
+        public override Part Clone()
+        {
+            return new EnginePart(Mass, Name, RadialJoint, CopyInlineJoints(), thrust, isp, fuelConsumption);
+        }
     }
 }

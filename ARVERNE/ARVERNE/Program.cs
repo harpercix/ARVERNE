@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using ARVERNE.Parts;
 using ARVERNE.Parts.PartsProperties;
@@ -9,8 +10,9 @@ namespace ARVERNE
     {
         static void Main(string[] args)
         {
-            Part[] parts = new Part[]
+            Dictionary<string, Part[]> parts = new Dictionary<string, Part[]>()
             {
+                {"OxFuel", new Part[]{
                 new OxFuelPart(560,
                     "FL-T100 Fuel Tank",
                     true,
@@ -22,7 +24,8 @@ namespace ARVERNE
                     55,
                     45,
                     60
-                ),
+                )}},
+                {"Engine", new Part[]{
                 new EnginePart(1250, 
                     "LV-T30 \"Reliant\" Liquid Fuel Engine",
                     false,
@@ -33,7 +36,8 @@ namespace ARVERNE
                     },
                     205160,
                     265,
-                    15.79),
+                    15.79)}},
+                {"Decoupler", new Part[]{
                 new InlineDecouplerPart(40,
                     "TD-12 Decoupler",
                     false,
@@ -41,7 +45,7 @@ namespace ARVERNE
                     {
                         new InlineJoint(1250, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0)),
                         new InlineJoint(1250, new Vector3(0, 0, 0), new Quaternion(0, 180, 0, 0))
-                    })
+                    })}}
             };
 
         Console.WriteLine("Hello World!");

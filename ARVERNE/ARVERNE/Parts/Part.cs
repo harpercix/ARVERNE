@@ -9,6 +9,9 @@ namespace ARVERNE.Parts
         private bool radialJoint;
         private InlineJoint[] inlineJoints;
         public int Mass => mass;
+        public string Name => name;
+        public bool RadialJoint => radialJoint;
+        public InlineJoint[] InlineJoints => inlineJoints;
 
         public Part(int mass, string name, bool radialJoint, InlineJoint[] inlineJoints)
         {
@@ -16,6 +19,18 @@ namespace ARVERNE.Parts
             this.name = name;
             this.radialJoint = radialJoint;
             this.inlineJoints = inlineJoints;
+        }
+
+        public virtual Part Clone()
+        {
+            return new Part(mass, name, radialJoint, inlineJoints);
+        }
+
+        public InlineJoint[] CopyInlineJoints()
+        {
+            InlineJoint[] newInlineJoints = new InlineJoint[InlineJoints.Length];
+            InlineJoints.CopyTo(newInlineJoints, 0);
+            return newInlineJoints;
         }
     }
 }
