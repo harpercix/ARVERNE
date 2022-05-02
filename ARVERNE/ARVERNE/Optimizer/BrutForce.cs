@@ -7,12 +7,20 @@ namespace ARVERNE.Optimizer
 {
     public class BrutForce
     {
-        private static void CreatCrafts(int NbStage, int DVNeeded, List<Craft> crafts,
+        private static void CreatCrafts(int NbStage, int DVNeeded, ref Craft bestCraft,
             Dictionary<string, Part[]> parts, Craft craft)
         {
             if (craft.CalculTotalDV() > DVNeeded)
             {
-                crafts.Add(craft);
+                if (bestCraft is null)
+                {
+                    bestCraft = craft;
+                    bestCraft.CalculMass();
+                }
+                else if (craft.CalculMass() < bestCraft.TotalMass)
+                {
+                    bestCraft = craft;
+                }
                 return;
             }
 
@@ -21,14 +29,14 @@ namespace ARVERNE.Optimizer
                 Craft newCraft = craft.Clone();
                 newCraft.Stages[i].Tanks.Add((OxFuelPart) parts["OxFuel"][0]);
                 newCraft.CalculTotalDV();
-                CreatCrafts(NbStage, DVNeeded, crafts, parts, newCraft);
+                CreatCrafts(NbStage, DVNeeded, ref bestCraft, parts, newCraft);
             }
         }
 
-        private static List<Craft> BrutForcer(int DVNeeded, Dictionary<string, Part[]> parts, int NbStageMax, 
+        public static Craft BrutForcer(int DVNeeded, Dictionary<string, Part[]> parts, int NbStageMax, 
             int payloadMass)
         {
-            List<Craft> crafts = new List<Craft>();
+            Craft bestCraft = null;
             for (int i = 1; i < NbStageMax; i++)
             {
                 Craft craft = new Craft(new List<Stage>(), payloadMass);
@@ -37,30 +45,12 @@ namespace ARVERNE.Optimizer
                     craft.Stages.Add(new Stage(new List<OxFuelPart>(), (EnginePart) parts["Engine"][0].Clone(),
                         (InlineDecouplerPart) parts["Decoupler"][0].Clone(), 0));
                 }
-
-                CreatCrafts(i, DVNeeded, crafts, parts, craft);
-            }
-
-            return crafts;
-        }
-
-        public static Craft BrutForcerMain(int DVNeeded, Dictionary<string, Part[]> parts, int NbStageMax,
-            int payloadMass)
-        {
-            List<Craft> crafts = BrutForcer(DVNeeded, parts, NbStageMax, payloadMass);
-            Craft bestCraft = crafts[0];
-            int mass = bestCraft.CalculMass();
-            for (int i = 1; i < crafts.Count; i++)
-            {
-                Console.WriteLine(crafts[i].Print());
-                if (crafts[i].CalculMass() < mass)
-                {
-                    bestCraft = crafts[i];
-                    mass = bestCraft.TotalMass;
-                }
+                
+                CreatCrafts(i, DVNeeded, ref bestCraft, parts, craft);
             }
 
             return bestCraft;
         }
+
     }
 }

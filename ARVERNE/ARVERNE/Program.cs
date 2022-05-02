@@ -49,7 +49,7 @@ namespace ARVERNE
                         new InlineJoint(1250, new Vector3(0, 0, 0), new Quaternion(0, 180, 0, 0))
                     })}}
             };
-            Craft bestCraft = BrutForce.BrutForcerMain(1000, parts, 3, 0);
+            Craft bestCraft = BrutForce.BrutForcer(1000, parts, 3, 0);
             Console.WriteLine(bestCraft.Print());
         }
     }
